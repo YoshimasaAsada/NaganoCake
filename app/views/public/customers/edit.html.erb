@@ -1,0 +1,81 @@
+<div class="container">
+  
+  <% if @end_user.errors.any? %>
+  <div class="alert alert-warning">
+    <ul>
+      <% @end_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+    <h2>会員情報編集</h2></br>
+<%= form_with model:@end_user, url: customers_path, local:true do |f| %>
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :last_name, "名前" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class:"form-control" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :last_name, "フリガナ" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana", class:"form-control" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :email, "メールアドレス" %>
+    </div>
+    <div class="col-3">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :postal_code, "郵便番号(ハイフンなし)" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :address, "住所" %>
+    </div>
+    <div class="col-7">
+    <%= f.text_field :address, autofocus: true, autocomplete: "address", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
+    </div>
+    <div class="col-3">
+    <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number", class:"form-control" %>
+    </div>
+  </div>
+
+
+  <div class="actions col-3 offset-3">
+    <%= f.submit "編集内容を保存", class:"btn btn-success" %>
+    <%= link_to "退会する", customers_confirm_path, class:"btn btn-success" %>
+  </div><br>
+<% end %>
+</div>

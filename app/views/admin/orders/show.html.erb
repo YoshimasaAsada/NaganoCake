@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <table>
+      <tbody>
+        <tr>
+          <th scope="row">購入者</th>
+          <td><%= @order.name %></td>
+        </tr>
+        <tr>
+          <th scope="row">注文日</th>
+          <td><%= @order.created_at %></td>
+        </tr>
+        <tr>
+          <th scope="row">配送先</th>
+          <td><%= @order.address %></td>
+        </tr>
+        <tr>
+          <th scope="row">支払方法</th>
+          <td><%= @order.payment_method %></td>
+        </tr>
+        <tr>
+          <th scope="row">注文ステータス</th>
+          <td><%= form_with model:@order, url: admin_order_path, local:true do |f| %>
+          <%= f.select :status, Order.statuses.keys, {} %>
+          <%= f.submit "更新", class:"btn btn-success" %>
+          <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div  class="row">
+      <div class="col-10">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">商品名</th>
+                  <th scope="col">単価(税込み)</th>
+                  <th scope="col">数量</th>
+                  <th scope="col">小計</th>
+                  <th scope="col">製作ステータス</th>
+                </tr>
+          </thead>
+          <tbody>
+            <% @order.order_details.each do |order_detail| %>
+            <tr>
+              <td><%= order_detail.item.name %></td>
+              <td><%= order_detail.price %></td>
+              <td><%= order_detail.amount %></td>
+              <td><%= order_detail.price * order_detail.amount %></td>
+              <td>
+                  <%= form_with model:order_detail, url: admin_order_detail_path(order_detail), local:true do |f| %>
+                  <%= f.select :production_status, OrderDetail.production_statuses.keys, {} %>
+                  <%= f.submit "更新", class:"btn btn-success" %>
+                  <% end %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+        <div class="col-2">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th scope="row">送料</th>
+                  <td><%= @order.shipping %></td>
+                </tr>
+                <tr>
+                  <th scope="row">商品合計</th>
+                  <td><%= @order.billing_amount %></td>
+                </tr>
+                <tr>
+                  <th scope="row">請求金額</th>
+                  <td><%= @order.billing_amount + @order.shipping %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+</div>

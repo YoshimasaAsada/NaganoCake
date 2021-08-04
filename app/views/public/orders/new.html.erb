@@ -1,0 +1,54 @@
+<div class="container">
+
+
+<%= form_with model:@order, url: orders_confirm_path, local:true do |f| %>
+<h3>支払方法</h3>
+<div class="form-group">
+<%= f.radio_button :payment_method, 0 %>
+<%= f.label :payment_method, "クレジットカード" %><br>
+<%= f.radio_button :payment_method, 1 %>
+<%= f.label :payment_method, "銀行振込" %>
+</div>
+<h3>お届け先</h3>
+<div class="form-group">
+<%= f.radio_button :address_option, 0 %>
+<%= f.label :address_option, "ご自身の住所" %><br>
+〒<%= current_end_user.postal_code %>　<%= current_end_user.address %><br>
+<%= current_end_user.last_name %><%= current_end_user.first_name %>
+</div>
+<div class="form-group">
+<%= f.radio_button :address_option, 1 %>
+<%= f.label :address_option, "登録済み住所から選択" %><br>
+<%= f.collection_select :address_id, @addresses, :id, :name, include_blank: "選択して下さい" %>
+</div>
+<div class="form-group">
+<%= f.radio_button :address_option, 2 %>
+<%= f.label :address_option, "新しいお届け先" %><br>
+<div class="form-group row">
+    <div class="col-3">
+    <%= f.label :postal_code, "郵便番号" %>
+    </div>
+    <div class="col-7">
+    <%= f.text_field :postal_code, autofocus: true, autocomplete: "address", class:"form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :address, "住所" %>
+    </div>
+    <div class="col-7">
+    <%= f.text_field :address, autofocus: true, autocomplete: "address", class:"form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-3">
+    <%= f.label :name, "宛名" %>
+    </div>
+    <div class="col-7">
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control" %>
+    </div>
+  </div>
+</div>
+  <%= f.submit "確認画面へ進む", class:"btn btn-success" %>
+ <% end %>
+ </div>
