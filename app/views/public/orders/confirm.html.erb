@@ -27,15 +27,15 @@
   <tbody>
     <tr>
       <th scope="row">送料</th>
-      <td><%= @order.shipping %></td>
+      <td><%= @order.shipping %>円</td>
     </tr>
     <tr>
       <th scope="row">商品合計</th>
-      <td><%= @order.billing_amount %></td>
+      <td><%= @order.billing_amount %>円</td>
     </tr>
     <tr>
       <th scope="row">請求金額</th>
-      <td><%= @order.billing_amount + @order.shipping %></td>
+      <td><%= @order.billing_amount + @order.shipping %>円</td>
     </tr>
   </tbody>
 </table>

@@ -58,12 +58,14 @@ class Public::OrdersController < ApplicationController
     end
     
     def index
+        @orders = current_end_user.orders
     end
     
     def compleat
     end
     
     def show
+        @order = Order.find(params[:id])
     end
     
     private

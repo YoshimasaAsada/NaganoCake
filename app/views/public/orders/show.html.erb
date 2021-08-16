@@ -1,1 +1,74 @@
-qq
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">注文日</th>
+          <td><%= @order.created_at.to_s(:datetime_jp) %></td>
+        </tr>
+        <tr>
+          <th scope="row">配送先</th>
+          <td>
+          〒<%= @order.postal_code %><br>
+          <%= @order.address %><br>
+          <%= @order.name %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">支払方法</th>
+          <td><%= @order.payment_method %></td>
+        </tr>
+        <tr>
+          <th scope="row">注文ステータス</th>
+          <td><%= @order.status %></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-9">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">商品名</th>
+                  <th scope="col">単価(税込み)</th>
+                  <th scope="col">数量</th>
+                  <th scope="col">小計</th>
+                </tr>
+          </thead>
+          <tbody>
+            <% @sum = 0 %>
+            <% @order.order_details.each do |order_detail| %>
+            <tr>
+              <td><%= order_detail.item.name %></td>
+              <td><%= order_detail.add_tax_price.to_s(:delimited) %>円</td>
+              <td><%= order_detail.amount %></td>
+              <td><%= (order_detail.add_tax_price * order_detail.amount).to_s(:delimited) %>円</td>
+            </tr>
+            <% @sum += (order_detail.add_tax_price * order_detail.amount) %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+        <div class="col-3">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th scope="row">送料</th>
+                  <td><%= @order.shipping %>円</td>
+                </tr>
+                <tr>
+                  <th scope="row">商品合計</th>
+                  <td><%= @sum.to_s(:delimited) %>円</td>
+                </tr>
+                <tr>
+                  <th scope="row">請求金額</th>
+                  <td><%= (@order.billing_amount + @order.shipping).to_s(:delimited) %>円</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+</div>

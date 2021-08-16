@@ -1,0 +1,43 @@
+<div class="container">
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">注文日</th>
+      <th scope="col">配送先</th>
+      <th scope="col">注文商品</th>
+      <th scope="col">支払金額</th>
+      <th scope="col">ステータス</th>
+      <th scope="col">注文詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @orders.each do |order| %>
+    <tr>
+      <td><%= order.created_at.to_s(:datetime_jp) %></td>
+      <td>
+      〒<%= order.postal_code %><br>
+      <%= order.address %><br>
+      <%= order.name %>
+      </td>
+      <% @sum = 0 %>
+      <td><% order.order_details.each do |order_detail| %>
+      <%= order_detail.item.name %><br>
+      <% @sum += (order_detail.add_tax_price * order_detail.amount) %>
+      <% end %>
+      </td>
+
+      
+      <td><%= @sum.to_s(:delimited) %>円</td>
+      <td><%= order.status %></td>
+      <td><%= link_to "表示する", order_path(order), class:"btn btn-success" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+ </table>
+</div>
